@@ -1,0 +1,6 @@
+{
+  // presets 从后往前执行
+  "presets": ["@babel/preset-env"],
+  // plugins 从前往后执行
+  "plugins": ["@vue/babel-plugin-jsx","@babel/plugin-transform-runtime"]
+}
