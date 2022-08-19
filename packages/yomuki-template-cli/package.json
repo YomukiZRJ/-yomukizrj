@@ -7,8 +7,26 @@
   "bin": {
     "ymcli": "index.js"
   },
+  "files": [
+    "index.js",
+    "template",
+    "utils",
+    "lib"
+  ],
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YomukiZRJ/yomuki-cli.git",
+    "directory": "packages/yomuki-template-cli"
+  },
+  "bugs": {
+    "url": "https://github.com/YomukiZRJ/yomuki-cli/issues"
+  },
+  "homepage": "https://github.com/YomukiZRJ/yomuki-cli/tree/master/packages/yomuki-template-cli#readme",
   "author": "yomuki",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "commander": "^9.4.0",
     "kolorist": "^1.5.1",
