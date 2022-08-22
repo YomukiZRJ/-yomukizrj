@@ -3,12 +3,19 @@
  * @Author: 曾茹菁
  * @Date: 2022-08-19 10:17:41
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-19 10:20:01
+ * @LastEditTime: 2022-08-22 14:11:38
 -->
 # 自用模板脚手架
-## webpack-vue3-js
+## 安装
+- npm install yomuki-template-cli -g
+## 使用
+### ymcli create [projectName] [templateName]
+- projectName 项目名称
+- templateName 模板名称
+## 目前模板
+### webpack-vue3-js
 webpack5 + vue3 + less + eslint + prettier + jsx + vueuse + axios + lodash + pinia + vue-router
 日常项目用
-## vite-vue3-ts-rule
+### vite-vue3-ts-rule
 vite + vue3 + ts + commitlint + eslint + husky + stylelint + prettier + commitizen + jsx
 规则贼多的，学习vite搭建时候的产物，应该没机会用正式项目中
