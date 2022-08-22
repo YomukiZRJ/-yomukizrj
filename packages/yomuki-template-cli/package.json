@@ -1,11 +1,15 @@
 {
   "name": "yomuki-template-cli",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "自用模板脚手架",
   "type": "module",
   "main": "index.js",
   "bin": {
     "ymcli": "index.js"
+  },
+  "scripts": {
+    "create": "node index.js create",
+    "ls": "node index.js ls"
   },
   "files": [
     "index.js",

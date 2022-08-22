@@ -3,7 +3,7 @@
  * @Author: 曾茹菁
  * @Date: 2022-08-19 10:17:41
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-22 14:11:38
+ * @LastEditTime: 2022-08-22 14:19:50
 -->
 # 自用模板脚手架
 ## 安装
@@ -12,6 +12,8 @@
 ### ymcli create [projectName] [templateName]
 - projectName 项目名称
 - templateName 模板名称
+### ymcli ls 
+查询模板列表
 ## 目前模板
 ### webpack-vue3-js
 webpack5 + vue3 + less + eslint + prettier + jsx + vueuse + axios + lodash + pinia + vue-router
