@@ -3,7 +3,7 @@
  * @Author: 曾茹菁
  * @Date: 2022-01-29 11:37:07
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-07-25 16:37:01
+ * @LastEditTime: 2022-08-30 10:52:59
  */
 const path = require("path"),
   chalk = require("chalk"),
@@ -12,7 +12,7 @@ const path = require("path"),
   CopyWebpackPlugin = require("copy-webpack-plugin"),
   { VueLoaderPlugin } = require("vue-loader/dist/index"),
   CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin"),
-  ESLintPlugin = require("eslint-webpack-plugin"),
+  // ESLintPlugin = require("eslint-webpack-plugin"),
   DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 require("dotenv").config({ path: path.resolve(__dirname, "../env/.env." + process.env.NODE_ENV) });
 
@@ -155,7 +155,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new ESLintPlugin(),
+    // new ESLintPlugin(),
     new CaseSensitivePathsPlugin(),
     /**
      * 复制静态资源至

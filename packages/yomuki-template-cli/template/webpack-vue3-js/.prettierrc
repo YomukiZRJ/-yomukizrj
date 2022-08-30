@@ -1,8 +1,0 @@
-{
-  "bracketSpacing": true,
-  "printWidth": 150,
-  "semi": true,
-  "singleQuote": false,
-  "jsxBracketSameLine": false,
-  "arrowParens": "avoid"
-}

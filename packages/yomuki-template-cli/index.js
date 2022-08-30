@@ -2,8 +2,9 @@
 import { Command } from "commander";
 import create from "./lib/create.js";
 import ls from "./lib/ls.js";
+import add from "./lib/add.js";
 import { fileURLToPath } from "node:url";
-import fs from "node:fs";
+import { readFileSync } from "node:fs";
 import path from "node:path";
 const program = new Command();
 const pakDir = path.resolve(
@@ -13,7 +14,7 @@ const pakDir = path.resolve(
 );
 // console.log(pakDir);
 // 读取package
-const pkg = JSON.parse(fs.readFileSync(pakDir, "utf-8"));
+const pkg = JSON.parse(readFileSync(pakDir, "utf-8"));
 
 // 设置cli版本 -V
 program.version(pkg.version);
@@ -26,4 +27,6 @@ program
   .action(create);
 // 模板列表
 program.command("ls").description("查询模板列表").action(ls);
+// 添加扩展
+program.command("add").description("在项目中添加拓展").action(add);
 program.parse(process.argv);

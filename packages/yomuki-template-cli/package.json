@@ -9,7 +9,8 @@
   },
   "scripts": {
     "create": "node index.js create",
-    "ls": "node index.js ls"
+    "ls": "node index.js ls",
+    "add": "node index.js add"
   },
   "files": [
     "index.js",
@@ -36,6 +37,7 @@
     "commander": "^9.4.0",
     "gradient-string": "^2.0.1",
     "kolorist": "^1.5.1",
+    "nanospinner": "^1.1.0",
     "prompts": "^2.4.2"
   }
 }
