@@ -3,7 +3,7 @@
  * @Author: 曾茹菁
  * @Date: 2022-08-18 15:43:48
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-18 17:57:16
+ * @LastEditTime: 2022-08-30 15:31:21
  */
 import { blue, cyan, green, lightRed, magenta, red, reset, yellow } from "kolorist";
 const BUNDLERS = [
@@ -15,7 +15,7 @@ const BUNDLERS = [
 			{
 				title: "webpack-vue3-js",
 				template: "webpack-vue3-js",
-				description: "less + eslint + prettier + jsx + vueuse + axios + lodash + pinia + vue-router",
+				description: "less + jsx + vueuse + axios + lodash + pinia + vue-router",
 				color: magenta,
 			},
 		],

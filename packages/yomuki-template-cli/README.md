@@ -3,7 +3,7 @@
  * @Author: 曾茹菁
  * @Date: 2022-08-19 10:17:41
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-30 15:21:59
+ * @LastEditTime: 2022-08-30 15:26:45
 -->
 
 # 自用模板脚手架
@@ -25,7 +25,7 @@
 
 查询模板列表
 
-## 目前模板
+#### 目前模板
 
 ### webpack-vue3-js
 
@@ -37,11 +37,11 @@ webpack5 + vue3 + less + eslint + prettier + jsx + vueuse + axios + lodash + pin
 vite + vue3 + ts + commitlint + eslint + husky + stylelint + prettier + commitizen + jsx
 规则贼多的，学习 vite 搭建时候的产物，应该没机会用正式项目中
 
-## ymcli add
+### ymcli add
 
 为项目添加拓展，需在项目根目录运行。
 
-### eslint
+#### eslint
 
 为项目添加 eslint 验证。会在 scripts 中添加如下命令
 
