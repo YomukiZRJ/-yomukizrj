@@ -12,28 +12,28 @@ import gradient from "gradient-string";
  * @param {string} str
  */
 export function printNormal(str) {
-  console.log(bold(gradient.morning(str)));
+	console.log(bold(gradient.morning(str)));
 }
 /**
  * @description: 打印成功提示
  * @param {string} str
  */
 export function printSuccess(str) {
-  console.log(bold(gradient.cristal(str)));
+	console.log(bold(gradient.cristal(str)));
 }
 /**
  * @description: 打印警告提示
  * @param {string} str
  */
 export function printWarn(str) {
-  console.log(bold(gradient.passion(str)));
+	console.log(bold(gradient.passion(str)));
 }
 /**
  * @description: 打印失败提示
  * @param {string} str
  */
 export function printError(str) {
-  console.log(bold(gradient.passion(str)));
+	console.log(bold(gradient.passion(str)));
 }
 /**
  * @description: 返回美化后的失败提示语
@@ -41,8 +41,8 @@ export function printError(str) {
  * @return {*}
  */
 export function errorText(str) {
-  return red(str);
+	return red(str);
 }
 export function successText(str) {
-  return green(str);
+	return green(str);
 }

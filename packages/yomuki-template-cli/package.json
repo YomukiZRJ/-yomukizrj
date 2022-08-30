@@ -1,43 +1,54 @@
 {
-  "name": "yomuki-template-cli",
-  "version": "1.0.6",
-  "description": "自用模板脚手架",
-  "type": "module",
-  "main": "index.js",
-  "bin": {
-    "ymcli": "index.js"
-  },
-  "scripts": {
-    "create": "node index.js create",
-    "ls": "node index.js ls",
-    "add": "node index.js add"
-  },
-  "files": [
-    "index.js",
-    "template",
-    "utils",
-    "lib",
-    "package.json"
-  ],
-  "engines": {
-    "node": "^14.18.0 || >=16.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/YomukiZRJ/yomuki-cli.git",
-    "directory": "packages/yomuki-template-cli"
-  },
-  "bugs": {
-    "url": "https://github.com/YomukiZRJ/yomuki-cli/issues"
-  },
-  "homepage": "https://github.com/YomukiZRJ/yomuki-cli/tree/master/packages/yomuki-template-cli#readme",
-  "author": "yomuki",
-  "license": "MIT",
-  "dependencies": {
-    "commander": "^9.4.0",
-    "gradient-string": "^2.0.1",
-    "kolorist": "^1.5.1",
-    "nanospinner": "^1.1.0",
-    "prompts": "^2.4.2"
-  }
+	"name": "yomuki-template-cli",
+	"version": "1.0.6",
+	"description": "自用模板脚手架",
+	"type": "module",
+	"main": "index.js",
+	"bin": {
+		"ymcli": "index.js"
+	},
+	"scripts": {
+		"create": "node index.js create",
+		"ls": "node index.js ls",
+		"add": "node index.js add",
+		"lint": "eslint ./",
+		"lint:fix": "eslint --fix ./",
+		"prettier": "prettier --check --ignore-path .eslintignore ./",
+		"prettier:fix": "prettier --write --ignore-path .eslintignore ./"
+	},
+	"files": [
+		"index.js",
+		"template",
+		"add-eslint",
+		"utils",
+		"lib",
+		"package.json"
+	],
+	"engines": {
+		"node": "^14.18.0 || >=16.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YomukiZRJ/yomuki-cli.git",
+		"directory": "packages/yomuki-template-cli"
+	},
+	"bugs": {
+		"url": "https://github.com/YomukiZRJ/yomuki-cli/issues"
+	},
+	"homepage": "https://github.com/YomukiZRJ/yomuki-cli/tree/master/packages/yomuki-template-cli#readme",
+	"author": "yomuki",
+	"license": "MIT",
+	"dependencies": {
+		"commander": "^9.4.0",
+		"gradient-string": "^2.0.1",
+		"kolorist": "^1.5.1",
+		"nanospinner": "^1.1.0",
+		"prompts": "^2.4.2"
+	},
+	"devDependencies": {
+		"eslint": "^8.23.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"prettier": "^2.7.1"
+	}
 }

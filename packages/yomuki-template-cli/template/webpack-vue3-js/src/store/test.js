@@ -15,10 +15,10 @@ export const useTestStore = defineStore("test", {
     };
   },
   getters: {
-    doubleAge: (state) => {
+    doubleAge: state => {
       return state.age * 2;
     },
-    getAgeTotal: (state) => {
+    getAgeTotal: state => {
       return (age = 12) => state.age + age;
     },
   },
