@@ -3,9 +3,7 @@ import { fileURLToPath } from "node:url";
 import fs from "node:fs";
 import path from "node:path";
 import prompts from "prompts";
-import { red, green, bold } from "kolorist";
-import gradient from "gradient-string";
-import { BUNDLERS, TEMPLATES } from "../template/index.js";
+import { BUNDLERS, TEMPLATES } from "../template/create/index.js";
 import {
 	formatTargetDir,
 	isEmpty,
@@ -15,9 +13,10 @@ import {
 	copy,
 	pkgFromUserAgent,
 } from "../utils/index.js";
+import { errorText, printNormal, printSuccess } from "../utils/print.js";
 
 export default (projectName, templateName) => {
-	console.log(bold(gradient.morning("\n🐣欢迎使用Yomuki的模板创建！\n")));
+	printNormal("\n🐣欢迎使用Yomuki的模板创建！\n");
 	const cwd = process.cwd(); // 当前node执行目录
 	const renameFiles = {
 		_gitignore: ".gitignore",
@@ -53,7 +52,7 @@ export default (projectName, templateName) => {
 			// 处理上一步的确认值。如果用户没同意，抛出异常。同意了就继续
 			type: (_, { overwrite } = {}) => {
 				if (overwrite === false) {
-					throw new Error(red("✖") + " Operation cancelled");
+					throw new Error(errorText("✖ 操作取消"));
 				}
 				return null;
 			},
@@ -118,7 +117,7 @@ export default (projectName, templateName) => {
 		try {
 			result = await prompts(questions, {
 				onCancel: () => {
-					throw new Error(gradient.passion("❌已取消操作"));
+					throw new Error(errorText("❌已取消操作"));
 				},
 			});
 		} catch (cancelled) {
@@ -132,9 +131,9 @@ export default (projectName, templateName) => {
 		} else if (!fs.existsSync(projectRoot)) {
 			fs.mkdirSync(projectRoot, { recursive: true });
 		}
-		console.log(green(`\nScaffolding project in ${projectRoot}...`));
+		printSuccess(`\nScaffolding project in ${projectRoot}...`);
 		const templateFileName = template || templateName;
-		const templateDir = path.resolve(fileURLToPath(import.meta.url), "../../template", templateFileName);
+		const templateDir = path.resolve(fileURLToPath(import.meta.url), "../../template/create", templateFileName);
 		const files = fs.readdirSync(templateDir);
 		const write = (file, content) => {
 			const targetPath = renameFiles[file] ? path.join(projectRoot, renameFiles[file]) : path.join(projectRoot, file);
@@ -152,7 +151,7 @@ export default (projectName, templateName) => {
 		write("package.json", JSON.stringify(pkg, null, 2));
 		const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
 		const pkgManager = pkgInfo ? pkgInfo.name : "npm";
-		console.log(gradient.cristal(`\nDone. Now run:\n`));
+		printSuccess(`\nDone. Now run:\n`);
 		if (projectRoot !== cwd) {
 			console.log(`  cd ${path.relative(cwd, projectRoot)}`);
 		}

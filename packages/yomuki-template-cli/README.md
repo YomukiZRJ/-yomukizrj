@@ -3,7 +3,7 @@
  * @Author: 曾茹菁
  * @Date: 2022-08-19 10:17:41
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-30 15:37:29
+ * @LastEditTime: 2022-08-30 15:43:31
 -->
 
 # 自用模板脚手架
@@ -50,3 +50,7 @@
     "prettier:fix": "prettier --write --ignore-path .eslintignore ./",// 代码格式化修复
 }
 ```
+
+## 计划中的
+
+- git 提交相关

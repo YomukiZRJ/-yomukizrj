@@ -5,10 +5,9 @@ import prompts from "prompts";
 import { cwd } from "node:process";
 import { createSpinner } from "nanospinner";
 import { exec } from "child_process";
-import { pkgFromUserAgent } from "../../utils/index.js";
-import { printNormal, printSuccess, printWarn, errorText, successText } from "../../utils/print.js";
-import { questions, qPkgManager, qOverwrite } from "../../add-eslint/questions.js";
-import { commonPackages, commonEslintConfig, prettierConfig, eslintIgnore } from "../../add-eslint/index.js";
+import { printNormal, printSuccess, printWarn, errorText, successText } from "../utils/print.js";
+import { questions, qOverwrite } from "../template/add-eslint/questions.js";
+import { commonPackages, commonEslintConfig, prettierConfig, eslintIgnore } from "../template/add-eslint/index.js";
 
 export default () => {
 	/**
@@ -22,15 +21,9 @@ export default () => {
 	async function run() {
 		printNormal("\n🐣欢迎使用eslint添加工具！\n");
 		const pakContent = JSON.parse(readFileSync(pakFile));
+		// 是否已安装eslint
 		const hasEslint = Object.hasOwn(pakContent, "devDependencies") && Object.hasOwn(pakContent.devDependencies, "eslint");
-		const promptsQuestions = [...(hasEslint ? qOverwrite : []), ...questions];
-		// 获取当前使用的包管理器 未获取到的话将包管理器询问插入进ques中
-		// console.log(promptsQuestions);
-		const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent);
-		const pkgManager = pkgInfo ? pkgInfo.name : null;
-		if (!pkgManager || !["npm", "pnpm", "yarn"].includes(pkgManager)) {
-			promptsQuestions.push(qPkgManager);
-		}
+		const promptsQuestions = hasEslint ? [...qOverwrite, ...questions] : questions;
 		let result = {};
 		// 进行用户询问 拼接模板名称
 		try {
@@ -45,13 +38,14 @@ export default () => {
 		}
 		const { frame, jstype, manager } = result;
 		const templateName = `${frame}-${jstype}`;
-		const { templatePackages, eslintOverrides, eslintScripts } = await import(`../../add-eslint/template/${templateName}.js`);
+		const { templatePackages, eslintOverrides, eslintScripts } = await import(`../template/add-eslint/config/${templateName}.js`);
 		const packageList = [...commonPackages, ...templatePackages];
 		const eslint = { ...commonEslintConfig, overrides: eslintOverrides };
 		const commandMap = {
 			npm: `npm install --save-dev ${packageList.join(" ")}`,
 			yarn: `yarn add --dev ${packageList.join(" ")}`,
 			pnpm: `pnpm install --save-dev ${packageList.join(" ")}`,
+			pnpmw: `pnpm install --save-dev --workspace-root ${packageList.join(" ")}`,
 		};
 		const useManager = manager || pkgManager;
 		const installCommand = commandMap[useManager];

@@ -3,9 +3,9 @@
  * @Author: 曾茹菁
  * @Date: 2022-08-23 13:36:05
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-30 13:56:39
+ * @LastEditTime: 2022-08-31 09:35:51
  */
-import { errorText } from "../utils/print.js";
+import { errorText } from "../../utils/print.js";
 export const questions = [
 	{
 		type: "select",
@@ -41,26 +41,30 @@ export const questions = [
 			},
 		],
 	},
+	{
+		type: "select",
+		name: "manager",
+		message: "请选择包管理器：",
+		choices: [
+			{
+				title: "npm",
+				value: "npm",
+			},
+			{
+				title: "yarn",
+				value: "yarn",
+			},
+			{
+				title: "pnpm",
+				value: "pnpm",
+			},
+			{
+				title: "pnpm 根工作区",
+				value: "pnpmw",
+			},
+		],
+	},
 ];
-export const qPkgManager = {
-	type: "select",
-	name: "manager",
-	message: "请选择包管理器：",
-	choices: [
-		{
-			title: "npm",
-			value: "npm",
-		},
-		{
-			title: "pnpm",
-			value: "pnpm",
-		},
-		{
-			title: "yarn",
-			value: "yarn",
-		},
-	],
-};
 export const qOverwrite = [
 	{
 		type: "confirm",

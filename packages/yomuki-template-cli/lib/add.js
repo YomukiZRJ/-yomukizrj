@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { cwd } from "node:process";
 import { resolve } from "node:path";
 import prompts from "prompts";
-import addEslint from "./add/add-eslint.js";
+import addEslint from "./add-eslint.js";
 import { printError, errorText } from "../utils/print.js";
 
 const projectDirectory = cwd(),

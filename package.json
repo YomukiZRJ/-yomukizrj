@@ -2,7 +2,16 @@
   "name": "yomuki-monorepo",
   "version": "1.0.0",
   "description": "仓管",
-  "scripts": {},
+  "scripts": {
+    "prepare": "husky install"
+  },
   "author": "yomuki",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.23.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "husky": "^8.0.0"
+  }
 }
