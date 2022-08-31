@@ -47,7 +47,7 @@ export default () => {
 			pnpm: `pnpm install --save-dev ${packageList.join(" ")}`,
 			pnpmw: `pnpm install --save-dev --workspace-root ${packageList.join(" ")}`,
 		};
-		const useManager = manager || pkgManager;
+		const useManager = manager;
 		const installCommand = commandMap[useManager];
 		if (!installCommand) {
 			printWarn("目前只支持npm / yarn / pnpm 哦~");

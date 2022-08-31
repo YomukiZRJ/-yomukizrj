@@ -1,17 +1,27 @@
 {
-  "name": "yomuki-monorepo",
+  "name": "yomuki-cli-monorepo",
   "version": "1.0.0",
-  "description": "仓管",
+  "description": "cli仓管",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "cli:add": "pnpm run add --filter yomuki-template-cli",
+    "cli:create": "pnpm run create --filter yomuki-template-cli",
+    "cli:ls": "pnpm run ls --filter yomuki-template-cli",
+    "lint": "eslint --ext .js,.ts ./",
+    "lint:fix": "eslint --fix --ext .js,.ts ./",
+    "prettier": "prettier --check --ignore-path .eslintignore ./",
+    "prettier:fix": "prettier --write --ignore-path .eslintignore ./"
   },
   "author": "yomuki",
   "license": "ISC",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.1",
+    "@typescript-eslint/parser": "^5.36.1",
     "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^8.0.0",
     "prettier": "^2.7.1",
-    "husky": "^8.0.0"
+    "typescript": "^4.8.2"
   }
 }

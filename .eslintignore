@@ -1,0 +1,4 @@
+node_modules
+dist
+.husky
+vite-vue3-ts-rule

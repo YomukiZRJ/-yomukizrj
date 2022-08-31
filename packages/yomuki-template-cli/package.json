@@ -10,11 +10,7 @@
 	"scripts": {
 		"create": "node index.js create",
 		"ls": "node index.js ls",
-		"add": "node index.js add",
-		"lint": "eslint ./",
-		"lint:fix": "eslint --fix ./",
-		"prettier": "prettier --check --ignore-path .eslintignore ./",
-		"prettier:fix": "prettier --write --ignore-path .eslintignore ./"
+		"add": "node index.js add"
 	},
 	"files": [
 		"index.js",
@@ -43,11 +39,5 @@
 		"kolorist": "^1.5.1",
 		"nanospinner": "^1.1.0",
 		"prompts": "^2.4.2"
-	},
-	"devDependencies": {
-		"eslint": "^8.23.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-prettier": "^4.2.1",
-		"prettier": "^2.7.1"
 	}
 }
