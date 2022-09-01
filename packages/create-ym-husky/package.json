@@ -1,18 +1,35 @@
 {
 	"name": "create-ym-husky",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"description": "为项目添加husky",
 	"type": "module",
 	"main": "index.js",
+	"bin": {
+		"create-ym-husky": "index.js"
+	},
 	"scripts": {
 		"husky": "node index.js"
 	},
+	"files": [
+		"index.js",
+		"src",
+		"package.json"
+	],
 	"engines": {
 		"node": "^14.18.0 || >=16.0.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YomukiZRJ/yomuki-cli.git",
+		"directory": "packages/create-ym-husky"
+	},
+	"bugs": {
+		"url": "https://github.com/YomukiZRJ/yomuki-cli/issues"
+	},
+	"homepage": "https://github.com/YomukiZRJ/yomuki-cli/tree/master/packages/create-ym-husky#readme",
 	"author": "yomuki",
 	"license": "MIT",
-	"devDependencies": {
+	"dependencies": {
 		"kolorist": "^1.5.1",
 		"nanospinner": "^1.1.0",
 		"prompts": "^2.4.2"
