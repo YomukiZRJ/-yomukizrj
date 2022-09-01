@@ -7,6 +7,7 @@
 		"cli:add": "pnpm run add --filter yomuki-template-cli",
 		"cli:create": "pnpm run create --filter yomuki-template-cli",
 		"cli:ls": "pnpm run ls --filter yomuki-template-cli",
+		"husky": "pnpm run husky --filter create-ym-husky",
 		"lint": "eslint --ext .js,.ts ./",
 		"lint:fix": "eslint --fix --ext .js,.ts ./",
 		"prettier": "prettier --check --ignore-path .eslintignore ./",
