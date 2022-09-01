@@ -3,7 +3,7 @@
  * @Author: 曾茹菁
  * @Date: 2022-09-01 15:15:40
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-09-01 15:43:16
+ * @LastEditTime: 2022-09-01 15:48:17
 -->
 
 # create-ym-husky
@@ -20,7 +20,21 @@
 ## use
 
 ```
-npm ym-husky
+npm init ym-husky
+```
+
+## scripts
+
+将会新增以下 scripts
+
+- commit 提交
+
+```js
+  "scripts": {
+    "prepare": "husky install",
+    "lint:lint-staged": "lint-staged",
+    "commit": "git add . && git-cz"
+  },
 ```
 
 ## tip
