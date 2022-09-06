@@ -3,47 +3,26 @@
  * @Author: 曾茹菁
  * @Date: 2022-01-29 11:37:07
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-08-30 10:52:59
+ * @LastEditTime: 2022-09-06 15:49:28
  */
-const path = require("path"),
-	chalk = require("chalk"),
+const chalk = require("chalk"),
 	ProgressBarPlugin = require("progress-bar-webpack-plugin"),
 	HtmlWebpackPlugin = require("html-webpack-plugin"),
 	CopyWebpackPlugin = require("copy-webpack-plugin"),
 	{ VueLoaderPlugin } = require("vue-loader/dist/index"),
 	CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin"),
-	// ESLintPlugin = require("eslint-webpack-plugin"),
-	DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
-require("dotenv").config({ path: path.resolve(__dirname, "../env/.env." + process.env.NODE_ENV) });
-
+	DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin"),
+	{ rootPath } = require("./utils.js");
+require("dotenv").config({ path: rootPath("env/.env." + process.env.NODE_ENV) });
+// const idDev = process.env.NODE_ENV === "development";
+// console.log(idDev);
 module.exports = {
-	entry: path.resolve(__dirname, "../src/main.js"), // 打包入口
-	optimization: {
-		// js分离
-		runtimeChunk: "single",
-		splitChunks: {
-			chunks: "all",
-			maxInitialRequests: Infinity,
-			minSize: 20000,
-			cacheGroups: {
-				vendor: {
-					test: /[\\/]node_modules[\\/]/,
-					name(module) {
-						// get the name. E.g. node_modules/packageName/not/this/part.js
-						// or node_modules/packageName
-						const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-						// npm package names are URL-safe, but some servers don't like @ symbols
-						return `npm.${packageName.replace("@", "")}`;
-					},
-				},
-			},
-		},
-	},
+	entry: rootPath("src/main.js"), // 打包入口
 	module: {
 		rules: [
 			{
 				test: /\.vue$/,
-				include: path.resolve("src"),
+				include: rootPath("src"),
 				exclude: /node_modules/,
 				use: ["vue-loader"],
 			},
@@ -72,8 +51,7 @@ module.exports = {
 							{
 								loader: "css-loader",
 								options: {
-									modules: true,
-									localIdentName: "[local]_[hash:base64:5]",
+									modules: true, // use CSS modules  @see https://www.npmjs.com/package/css-loader
 								},
 							},
 							"postcss-loader",
@@ -87,7 +65,7 @@ module.exports = {
 			},
 			{
 				test: /\.less$/,
-				include: path.resolve("src"),
+				include: rootPath("src"),
 				oneOf: [
 					// 这里匹配 `<style module>`
 					{
@@ -98,7 +76,6 @@ module.exports = {
 								loader: "css-loader",
 								options: {
 									modules: true,
-									localIdentName: "[local]_[hash:base64:5]",
 								},
 							},
 							"postcss-loader",
@@ -123,48 +100,38 @@ module.exports = {
 					},
 				},
 				generator: {
-					filename: "images/[hash][ext][query]", // 指定生成目录名称
+					filename: "images/[contenthash][ext][query]", // 指定生成目录名称
 				},
 			},
-			// {
-			//   test: /\.(png|jpe?g|gif|svg|ico)(\?.*)?$/, //加载图片资源
-			//   loader: "url-loader",
-			//   type: "javascript/auto", //解决asset重复
-			//   options: {
-			//     esModule: false, //解决html区域,vue模板引入图片路径问题
-			//     limit: 1000,
-			//     name: "static/img/[name].[hash:7].[ext]",
-			//   },
-			// },
-			// {
-			//   test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/, //加载视频资源
-			//   loader: "url-loader",
-			//   options: {
-			//     limit: 10000,
-			//     name: "static/media/[name].[hash:7].[ext]",
-			//   },
-			// },
-			// {
-			//   test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/i, //加载字体资源
-			//   loader: "url-loader",
-			//   options: {
-			//     limit: 10000,
-			//     name: "static/fonts/[name].[hash:7].[ext]",
-			//   },
-			// },
+			{
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+				type: "asset",
+				parser: {
+					dataUrlCondition: {
+						maxSize: 10 * 1024, // 10kb
+					},
+				},
+				generator: {
+					filename: "fonts/[contenthash][ext][query]",
+				},
+			},
 		],
 	},
 	plugins: [
-		// new ESLintPlugin(),
-		new CaseSensitivePathsPlugin(),
+		/**
+		 * 路径强制大小写
+		 */
+		new CaseSensitivePathsPlugin({
+			debug: false, // 是否输出目录列表
+		}),
 		/**
 		 * 复制静态资源至
 		 */
 		new CopyWebpackPlugin({
 			patterns: [
 				{
-					from: path.resolve(__dirname, "../public"), // 复制源
-					to: path.resolve(__dirname, "../dist/static"), // 目的源
+					from: rootPath("public"), // 复制源
+					to: rootPath("dist/static"), // 目的源
 				},
 			],
 		}),
@@ -172,7 +139,7 @@ module.exports = {
 		 * html文件处理
 		 */
 		new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, "../index.html"), //  模板文件
+			template: rootPath("index.html"), //  模板文件
 			filename: "index.html", // 输出name
 			title: process.env.APP_NAME, // 模板内，通过 <%= htmlWebpackPlugin.options.title %> 拿到的变量
 			minify: {
@@ -198,10 +165,10 @@ module.exports = {
 		new DuplicatePackageCheckerPlugin(),
 	],
 	resolve: {
-		extensions: [".js", ".jsx", ".json", ".vue"], //省略文件后缀
+		extensions: [".js", ".jsx", ".json", ".vue"], //省略文件后缀 yyx说.vue最好别省略
 		alias: {
 			//配置别名
-			"@": path.resolve(__dirname, "../src"),
+			"@": rootPath("src"),
 		},
 	},
 	// 缓存

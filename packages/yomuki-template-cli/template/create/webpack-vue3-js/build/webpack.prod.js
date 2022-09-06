@@ -3,14 +3,14 @@
  * @Author: 曾茹菁
  * @Date: 2022-01-29 11:37:02
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-09-01 11:00:46
+ * @LastEditTime: 2022-09-06 16:08:27
  */
-const path = require("path"),
-	{ merge } = require("webpack-merge"),
+const { merge } = require("webpack-merge"),
 	common = require("./webpack.base.js"),
 	CompressionPlugin = require("compression-webpack-plugin"), // gzip压缩
 	TerserWebpackPlugin = require("terser-webpack-plugin"),
-	BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+	BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
+	{ rootPath } = require("./utils.js");
 
 module.exports = merge(common, {
 	mode: "production",
@@ -23,10 +23,11 @@ module.exports = merge(common, {
 	],
 	output: {
 		filename: "js/[name].[contenthash].js", //contenthash 若文件内容无变化，则contenthash 名称不变
-		path: path.resolve(__dirname, "../dist"),
+		path: rootPath("dist"),
 		clean: true,
 	},
 	optimization: {
+		runtimeChunk: "single",
 		splitChunks: {
 			// 选择哪些 chunk 进行优化，默认async，即只对动态导入形成的chunk进行优化。
 			chunks: "all",
@@ -36,18 +37,15 @@ module.exports = merge(common, {
 			minChunks: 1,
 			// 对要提取的chunk进行分组
 			cacheGroups: {
-				// 匹配node_modules中的三方库，将其打包成一个chunk
-				defaultVendors: {
+				vendor: {
 					test: /[\\/]node_modules[\\/]/,
-					// chunk名称
-					name: "vendors",
-					priority: -10,
-				},
-				default: {
-					// 将至少被两个chunk引入的模块提取出来打包成单独chunk
-					minChunks: 2,
-					name: "default",
-					priority: -20,
+					name(module) {
+						// get the name. E.g. node_modules/packageName/not/this/part.js
+						// or node_modules/packageName
+						const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+						// npm package names are URL-safe, but some servers don't like @ symbols
+						return `npm.${packageName.replace("@", "")}`;
+					},
 				},
 			},
 		},
@@ -58,9 +56,9 @@ module.exports = merge(common, {
 			 * https://webpack.js.org/plugins/terser-webpack-plugin/#remove-comments
 			 */
 			new TerserWebpackPlugin({
-				compress: {
-					pure_funcs: ["console.log"],
-				},
+				// compress: {
+				// 	pure_funcs: ["console.log"],
+				// },
 				terserOptions: {
 					format: {
 						comments: false,

@@ -3,17 +3,17 @@
  * @Author: 曾茹菁
  * @Date: 2022-01-29 11:36:51
  * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-07-08 09:40:57
+ * @LastEditTime: 2022-09-06 16:05:00
  */
 const { merge } = require("webpack-merge"),
 	common = require("./webpack.base.js"),
-	path = require("path");
+	{ rootPath } = require("./utils.js");
 module.exports = merge(common, {
 	mode: "development",
 	output: {
 		// filename: "js/[name].[hash].js", // 每次保存 hash 都变化 加快dev环境 去掉hash
 		filename: "js/[name].js",
-		path: path.resolve(__dirname, "../dist"),
+		path: rootPath("dist"),
 		clean: true,
 	},
 	// 开发工具，开启 source map，编译调试 可以将编译后的代码映射回原始源代码。
@@ -27,7 +27,7 @@ module.exports = merge(common, {
 		//托管的静态资源文件
 		//可通过数组的方式托管多个静态资源文件
 		static: {
-			directory: path.join(__dirname, "../public"),
+			directory: rootPath("public"),
 		},
 		client: {
 			//在浏览器端打印编译进度
