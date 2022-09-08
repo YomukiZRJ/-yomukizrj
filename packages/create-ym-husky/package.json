@@ -1,6 +1,6 @@
 {
 	"name": "create-ym-husky",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "为项目添加husky",
 	"type": "module",
 	"main": "index.js",
