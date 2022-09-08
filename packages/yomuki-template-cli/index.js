@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import semver from "semver";
+import { printError } from "./utils/print.js";
+
 const program = new Command();
 // 读取package
 const pakDir = path.resolve(fileURLToPath(import.meta.url), "../", "package.json");
@@ -14,7 +16,7 @@ const pkg = JSON.parse(readFileSync(pakDir, "utf-8"));
 // 检查node版本
 function checkNodeVersion(wanted, id) {
 	if (!semver.satisfies(process.version, wanted, { includePrerelease: true })) {
-		console.log(
+		printError(
 			"You are using Node " +
 				process.version +
 				", but this version of " +
