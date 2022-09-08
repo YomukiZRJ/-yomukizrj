@@ -28,7 +28,7 @@ function checkNodeVersion(wanted, id) {
 		process.exit(1);
 	}
 }
-checkNodeVersion(pkg.engines.node);
+checkNodeVersion(pkg.engines.node, pkg.name);
 // 设置cli版本 -V
 program.version(pkg.version);
 // 创建
