@@ -6,12 +6,27 @@ import add from "./lib/add.js";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import semver from "semver";
 const program = new Command();
-const pakDir = path.resolve(fileURLToPath(import.meta.url), "../", "package.json");
-// console.log(pakDir);
 // 读取package
+const pakDir = path.resolve(fileURLToPath(import.meta.url), "../", "package.json");
 const pkg = JSON.parse(readFileSync(pakDir, "utf-8"));
-
+// 检查node版本
+function checkNodeVersion(wanted, id) {
+	if (!semver.satisfies(process.version, wanted, { includePrerelease: true })) {
+		console.log(
+			"You are using Node " +
+				process.version +
+				", but this version of " +
+				id +
+				" requires Node " +
+				wanted +
+				".\nPlease upgrade your Node version."
+		);
+		process.exit(1);
+	}
+}
+checkNodeVersion(pkg.engines.node);
 // 设置cli版本 -V
 program.version(pkg.version);
 // 创建
