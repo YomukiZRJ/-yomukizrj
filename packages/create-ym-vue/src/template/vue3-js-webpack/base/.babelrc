@@ -1,0 +1,15 @@
+{
+	// presets 从后往前执行
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"useBuiltIns": "usage",
+				"corejs": "3.0"
+			}
+		]
+	],
+	// plugins 从前往后执行
+	// 在业务项目中不建议使用 @babel/plugin-transform-runtime ，建议在lib库中使用
+	"plugins": ["@vue/babel-plugin-jsx"]
+}
