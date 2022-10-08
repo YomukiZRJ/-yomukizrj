@@ -5,7 +5,7 @@
 	"type": "module",
 	"main": "index.js",
 	"bin": {
-		"create-ym-husky": "index.js"
+		"create-ym-lint": "index.js"
 	},
 	"scripts": {
 		"lint": "node index.js"
@@ -18,6 +18,15 @@
 	"engines": {
 		"node": "^14.17.0 || >=16.0.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YomukiZRJ/yomuki-cli.git",
+		"directory": "packages/create-ym-lint"
+	},
+	"bugs": {
+		"url": "https://github.com/YomukiZRJ/yomuki-cli/issues"
+	},
+	"homepage": "https://github.com/YomukiZRJ/yomuki-cli/tree/master/packages/create-ym-lint#readme",
 	"keywords": [],
 	"author": "yomuki",
 	"license": "ISC",
