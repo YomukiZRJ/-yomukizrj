@@ -1,0 +1,29 @@
+{
+	"name": "create-ym-lint",
+	"version": "1.0.0",
+	"description": "为vue项目添加eslint,prettier,stylelint",
+	"type": "module",
+	"main": "index.js",
+	"bin": {
+		"create-ym-husky": "index.js"
+	},
+	"scripts": {
+		"lint": "node index.js"
+	},
+	"files": [
+		"index.js",
+		"src",
+		"package.json"
+	],
+	"engines": {
+		"node": "^14.17.0 || >=16.0.0"
+	},
+	"keywords": [],
+	"author": "yomuki",
+	"license": "ISC",
+	"dependencies": {
+		"chalk": "^5.0.1",
+		"inquirer": "^9.1.2",
+		"nanospinner": "^1.1.0"
+	}
+}
