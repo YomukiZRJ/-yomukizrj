@@ -1,6 +1,6 @@
 {
 	"name": "create-ym-lint",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "为vue项目添加eslint,prettier,stylelint",
 	"type": "module",
 	"main": "index.js",

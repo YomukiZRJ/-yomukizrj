@@ -116,7 +116,7 @@ async function addLint() {
 				"prettier:check": "prettier --check --ignore-path .eslintignore ./",
 			},
 		};
-		writeFileSync(pakFile, JSON.stringify(newPakContent)); // 写入新的package.json
+		writeFileSync(pakFile, JSON.stringify(newPakContent, null, 2) + "\n"); // 写入新的package.json
 		writeFileSync(eslintIgnoreFile, eslintIgnore.join("\n")); // 写入eslintIgnore
 		copyFileSync(eslintOptionFile, eslintFile);
 		copyFileSync(prettierOptionFile, prettierFile);
