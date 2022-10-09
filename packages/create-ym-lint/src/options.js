@@ -136,7 +136,7 @@ export function getStyleScripts(fileExtArr = []) {
 /**
  * 基础包
  */
-export const basePackages = ["eslint@8", "prettier@8", "eslint-plugin-prettier@4", "eslint-config-prettier@8"];
+export const basePackages = ["eslint@8", "prettier@2", "eslint-plugin-prettier@4", "eslint-config-prettier@8"];
 export const packagesMap = {
 	js: {
 		packages: [],
