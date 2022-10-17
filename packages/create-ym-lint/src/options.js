@@ -117,7 +117,7 @@ export const commandMap = {
 	npm: `npm install --save-dev`,
 	yarn: `yarn add --dev`,
 	pnpm: `pnpm install --save-dev`,
-	pnpmw: `pnpm install --save-dev --workspace-roo`,
+	pnpmw: `pnpm install --save-dev --workspace-root`,
 };
 export function getEslintScripts(fileExtArr = []) {
 	const fileExtStr = fileExtArr.join("");
