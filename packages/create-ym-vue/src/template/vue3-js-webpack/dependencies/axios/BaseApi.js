@@ -1,10 +1,3 @@
-/*
- * @Desc:
- * @Author: 曾茹菁
- * @Date: 2022-02-14 09:02:22
- * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-05-12 10:35:22
- */
 import axios from "axios";
 class BaseApi {
 	baseService;

@@ -1,13 +1,7 @@
-/*
- * @Desc:
- * @Author: 曾茹菁
- * @Date: 2022-01-29 11:36:51
- * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-09-06 16:05:00
- */
 const { merge } = require("webpack-merge"),
 	common = require("./webpack.base.js"),
-	{ rootPath } = require("./utils.js");
+	{ rootPath } = require("./utils.js"),
+	{ baseConfig } = require("./config.js");
 module.exports = merge(common, {
 	mode: "development",
 	output: {
@@ -23,7 +17,7 @@ module.exports = merge(common, {
 		hot: true, //热更新
 		open: false, //编译完自动打开浏览器
 		compress: true, //开启gzip压缩
-		port: process.env.APP_PORT, //开启端口号
+		port: baseConfig.APP_DEV_PORT, //开启端口号
 		//托管的静态资源文件
 		//可通过数组的方式托管多个静态资源文件
 		static: {

@@ -1,70 +1,86 @@
 /*
- * @Desc:
- * @Author: 曾茹菁
- * @Date: 2022-01-29 11:37:02
- * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-09-06 16:08:27
+ * webpack prod 配置
  */
 const { merge } = require("webpack-merge"),
 	common = require("./webpack.base.js"),
-	CompressionPlugin = require("compression-webpack-plugin"), // gzip压缩
+	CompressionPlugin = require("compression-webpack-plugin"),
 	TerserWebpackPlugin = require("terser-webpack-plugin"),
 	BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin,
-	{ rootPath } = require("./utils.js");
-
+	{ rootPath } = require("./utils.js"),
+	{ baseConfig } = require("./config.js");
+const prodPlugins = [];
+if (baseConfig.BUILD_ANALYZER) {
+	prodPlugins.push(
+		/**
+		 * 产物包分析
+		 */
+		new BundleAnalyzerPlugin({
+			openAnalyzer: true, // 是否自动打开浏览器
+		})
+	);
+}
+if (baseConfig.BUILD_GZIP) {
+	prodPlugins.push(
+		/**
+		 * gzip压缩
+		 */
+		new CompressionPlugin({
+			deleteOriginalAssets: false, // 是否删除原产物
+		})
+	);
+}
 module.exports = merge(common, {
 	mode: "production",
+	devtool: "source-map",
 	module: {},
-	plugins: [
-		new BundleAnalyzerPlugin({
-			openAnalyzer: false, // 是否自动打开浏览器
-		}),
-		new CompressionPlugin(),
-	],
+	plugins: prodPlugins,
 	output: {
-		filename: "js/[name].[contenthash].js", //contenthash 若文件内容无变化，则contenthash 名称不变
+		filename: "js/[name].[contenthash].js",
 		path: rootPath("dist"),
 		clean: true,
 	},
 	optimization: {
 		runtimeChunk: "single",
 		splitChunks: {
-			// 选择哪些 chunk 进行优化，默认async，即只对动态导入形成的chunk进行优化。
-			chunks: "all",
-			// 提取chunk最小体积
-			minSize: 20000,
-			// 要提取的chunk最少被引用次数
-			minChunks: 1,
-			// 对要提取的chunk进行分组
-			cacheGroups: {
-				vendor: {
-					test: /[\\/]node_modules[\\/]/,
-					name(module) {
-						// get the name. E.g. node_modules/packageName/not/this/part.js
-						// or node_modules/packageName
-						const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-						// npm package names are URL-safe, but some servers don't like @ symbols
-						return `npm.${packageName.replace("@", "")}`;
-					},
-				},
-			},
+			chunks: "all", // 表示哪些代码需要优化，默认为 async ；initial(初始块)、async(按需加载块)、all(全部块)
+			minSize: 20000, // 表示在压缩前的最小模块大小，默认为 20000
+			minChunks: 1, // 要提取的chunk最少被引用次数，默认为2
+			maxAsyncRequests: 30, // 按需加载时的最大并行请求数，默认30
+			maxInitialRequests: 30, // 入口点的最大并行请求数，默认30
+			enforceSizeThreshold: 50000, // 强制执行拆分的体积阈值，默认值50000，其他限制（minRemainingSize，maxAsyncRequests，maxInitialRequests）将被忽略。
+			// cacheGroups: {
+			// 	vendor: {
+			// 		test: /[\\/]node_modules[\\/]/,
+			// 		name(module) {
+			// 			// use npm
+			// 			// get the name. E.g. node_modules/packageName/not/this/part.js
+			// 			// or node_modules/packageName
+			// 			// const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+			// 			// return `npm.${packageName.replace("@", "")}`;
+			// 			// use pnpm
+			// 			const packageName = module.context.match(/[\\/]node_modules\/.pnpm[\\/](.*?)([\\/]|$)/)[1];
+			// 			return `npm.${packageName.replaceAll("@", "").replaceAll("+", "-")}`;
+			// 		},
+			// 	},
+			// },
 		},
 		minimize: true,
 		minimizer: [
 			/**
 			 * 做压缩和混淆 https://github.com/terser/terser#minify-options
-			 * https://webpack.js.org/plugins/terser-webpack-plugin/#remove-comments
+			 * @see https://webpack.js.org/plugins/terser-webpack-plugin/
 			 */
 			new TerserWebpackPlugin({
-				// compress: {
-				// 	pure_funcs: ["console.log"],
-				// },
+				parallel: true, // 多进程并发，默认true
 				terserOptions: {
 					format: {
-						comments: false,
+						comments: false, // 是否保留注释
+					},
+					compress: {
+						pure_funcs: ["console.log"],
 					},
 				},
-				extractComments: false,
+				extractComments: false, // 是否将注释剥离到单独的文件中 默认true
 			}),
 		],
 	},

@@ -1,24 +1,28 @@
 /*
- * @Desc:存放 dev 和 prod 通用配置
- * @Author: 曾茹菁
- * @Date: 2022-01-29 11:37:07
- * @LastEditors: 曾茹菁
- * @LastEditTime: 2022-09-06 15:49:28
+ * webpack基础配置
  */
-const chalk = require("chalk"),
-	ProgressBarPlugin = require("progress-bar-webpack-plugin"),
+const ProgressBarPlugin = require("progress-bar-webpack-plugin"),
 	HtmlWebpackPlugin = require("html-webpack-plugin"),
 	CopyWebpackPlugin = require("copy-webpack-plugin"),
-	{ VueLoaderPlugin } = require("vue-loader/dist/index"),
+	webpack = require("webpack"),
+	{ VueLoaderPlugin } = require("vue-loader"),
 	CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin"),
 	DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin"),
-	{ rootPath } = require("./utils.js");
-require("dotenv").config({ path: rootPath("env/.env." + process.env.NODE_ENV) });
-// const idDev = process.env.NODE_ENV === "development";
-// console.log(idDev);
+	dotenv = require("dotenv"),
+	{ rootPath } = require("./utils.js"),
+	{ baseConfig } = require("./config.js");
+const env = dotenv.config({ path: rootPath("build/.env") }).parsed;
+const envKeys = Object.keys(env).reduce((prev, next) => {
+	prev[`process.env.${next}`] = JSON.stringify(env[next]);
+	return prev;
+}, {});
 module.exports = {
-	entry: rootPath("src/main.js"), // 打包入口
+	entry: rootPath("src/main.js"),
 	module: {
+		/**
+		 * @see https://webpack.docschina.org/configuration/module/#modulenoparse
+		 */
+		noParse: /jquery|(^vue$)|(^pinia$)|(^vue-router$)/,
 		rules: [
 			{
 				test: /\.vue$/,
@@ -28,17 +32,9 @@ module.exports = {
 			},
 			{
 				test: /\.(js|jsx)$/, //对所有js后缀的文件进行编译
-				// include: path.resolve("src"), //表示在src目录下的.js文件都要进行一下使用的loader
+				include: rootPath("src"),
 				exclude: /node_modules/,
-				use: [
-					"babel-loader?cacheDirectory=true",
-					{
-						loader: "thread-loader",
-						options: {
-							workers: 3,
-						},
-					},
-				],
+				use: ["babel-loader?cacheDirectory=true"],
 			},
 			{
 				test: /\.css$/,
@@ -51,7 +47,11 @@ module.exports = {
 							{
 								loader: "css-loader",
 								options: {
-									modules: true, // use CSS modules  @see https://www.npmjs.com/package/css-loader
+									/**
+									 * use CSS modules
+									 * @see https://www.npmjs.com/package/css-loader
+									 */
+									modules: true,
 								},
 							},
 							"postcss-loader",
@@ -66,8 +66,8 @@ module.exports = {
 			{
 				test: /\.less$/,
 				include: rootPath("src"),
+				exclude: /node_modules/,
 				oneOf: [
-					// 这里匹配 `<style module>`
 					{
 						resourceQuery: /module/,
 						use: [
@@ -88,14 +88,15 @@ module.exports = {
 					},
 				],
 			},
-
-			// 在webpack5中，内置了资源模块（asset module），代替了file-loader和url-loader
+			/**
+			 * v5内置资源模块
+			 * @see https://webpack.docschina.org/guides/asset-modules/
+			 */
 			{
 				test: /\.(png|jpe?g|gif|ico|bmp|svg)$/i,
 				type: "asset",
 				parser: {
 					dataUrlCondition: {
-						// 转换成data-uri的条件
 						maxSize: 10 * 1024, // 10kb
 					},
 				},
@@ -119,6 +120,10 @@ module.exports = {
 	},
 	plugins: [
 		/**
+		 * 注入环境变量
+		 */
+		new webpack.DefinePlugin(envKeys),
+		/**
 		 * 路径强制大小写
 		 */
 		new CaseSensitivePathsPlugin({
@@ -131,7 +136,7 @@ module.exports = {
 			patterns: [
 				{
 					from: rootPath("public"), // 复制源
-					to: rootPath("dist/static"), // 目的源
+					to: rootPath("dist/public"), // 目的源
 				},
 			],
 		}),
@@ -139,9 +144,9 @@ module.exports = {
 		 * html文件处理
 		 */
 		new HtmlWebpackPlugin({
-			template: rootPath("index.html"), //  模板文件
-			filename: "index.html", // 输出name
-			title: process.env.APP_NAME, // 模板内，通过 <%= htmlWebpackPlugin.options.title %> 拿到的变量
+			template: rootPath("index.html"),
+			filename: "index.html",
+			title: baseConfig.APP_NAME, // 模板内，通过 <%= htmlWebpackPlugin.options.title %> 拿到的变量
 			minify: {
 				//压缩HTML
 				collapseWhitespace: true, //删除空格
@@ -157,7 +162,7 @@ module.exports = {
 		 * 进度条
 		 */
 		new ProgressBarPlugin({
-			format: `  :msg [:bar] ${chalk.green.bold(":percent")} (:elapsed s)`,
+			format: `  :msg [:bar] :percent (:elapsed s)`,
 		}),
 		/**
 		 * 检测是否引入了一个包的多个版本
@@ -171,12 +176,13 @@ module.exports = {
 			"@": rootPath("src"),
 		},
 	},
-	// 缓存
+	/**
+	 * 模块缓存
+	 * @see https://webpack.docschina.org/configuration/cache/
+	 */
 	cache: {
-		// 将缓存类型设置为文件系统
-		type: "filesystem",
+		type: "filesystem", // 将缓存类型设置为文件系统
 		buildDependencies: {
-			// 推荐在 webpack 配置中设置 cache.buildDependencies.config: [__filename] 来获取最新配置以及所有依赖项
 			config: [__filename],
 		},
 	},
