@@ -1,5 +1,5 @@
 {
-	"name": "create-ym-vue",
+	"name": "@yomukizrj/create-vue",
 	"version": "1.0.2",
 	"description": "vue + webpack + js 项目初始化",
 	"type": "module",
@@ -18,11 +18,23 @@
 	"engines": {
 		"node": ">=17.6.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YomukiZRJ/-yomukizrj.git",
+		"directory": "packages/create-husky"
+	},
+	"bugs": {
+		"url": "https://github.com/YomukiZRJ/-yomukizrj/issues"
+	},
+	"homepage": "https://github.com/YomukiZRJ/-yomukizrj/tree/master/packages/create-vue#readme",
 	"keywords": [],
-	"author": "",
+	"author": "yomuki",
 	"license": "ISC",
 	"dependencies": {
 		"kolorist": "^1.5.1",
 		"prompts": "^2.4.2"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }

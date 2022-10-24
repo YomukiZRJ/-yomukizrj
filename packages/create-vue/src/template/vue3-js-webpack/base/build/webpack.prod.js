@@ -49,7 +49,7 @@ module.exports = merge(common, {
 			maxInitialRequests: 30, // 入口点的最大并行请求数，默认30
 			enforceSizeThreshold: 50000, // 强制执行拆分的体积阈值，默认值50000，其他限制（minRemainingSize，maxAsyncRequests，maxInitialRequests）将被忽略。
 			// cacheGroups: {
-			// 	vendor: {
+			// 	defaultVendors: {
 			// 		test: /[\\/]node_modules[\\/]/,
 			// 		name(module) {
 			// 			// use npm

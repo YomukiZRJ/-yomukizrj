@@ -1,7 +1,7 @@
 {
-	"name": "yomuki-cli-monorepo",
+	"name": "yomukizrj",
 	"version": "1.0.0",
-	"description": "cli仓管",
+	"description": "个人日常用的小工具",
 	"scripts": {
 		"prepare": "husky install",
 		"cli:add": "pnpm run add --filter yomuki-template-cli",

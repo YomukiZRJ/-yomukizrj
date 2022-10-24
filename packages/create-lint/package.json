@@ -1,6 +1,6 @@
 {
-	"name": "create-ym-lint",
-	"version": "1.0.2",
+	"name": "@yomukizrj/create-lint",
+	"version": "1.0.0",
 	"description": "为vue项目添加eslint,prettier,stylelint",
 	"type": "module",
 	"main": "index.js",
@@ -20,13 +20,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/YomukiZRJ/yomuki-cli.git",
-		"directory": "packages/create-ym-lint"
+		"url": "git+https://github.com/YomukiZRJ/-yomukizrj.git",
+		"directory": "packages/create-lint"
 	},
 	"bugs": {
-		"url": "https://github.com/YomukiZRJ/yomuki-cli/issues"
+		"url": "https://github.com/YomukiZRJ/-yomukizrj/issues"
 	},
-	"homepage": "https://github.com/YomukiZRJ/yomuki-cli/tree/master/packages/create-ym-lint#readme",
+	"homepage": "https://github.com/YomukiZRJ/-yomukizrj/tree/master/packages/create-lint#readme",
 	"keywords": [],
 	"author": "yomuki",
 	"license": "ISC",
@@ -34,5 +34,8 @@
 		"chalk": "^5.0.1",
 		"inquirer": "^9.1.2",
 		"nanospinner": "^1.1.0"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
