@@ -17,7 +17,7 @@
 ## use
 
 ```
-npm init ym-husky
+npm init @yomukizrj/husky
 ```
 
 ## scripts
